@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анализ</title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'analyze.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'font.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap"
+          rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+<p class="text-left mt-3">
+    <a href="{% url 'expenses' %}" style="margin-left: 2rem; color: #007bff;">К записям</a>
+</p>
+
+<div class="container expense-container">
+    <div class="expense-header">
+        <div class="expense-title">
+            <h4>{{ username }}, ваш финансовый отчет</h4>
+        </div>
+    </div>
+    <br>
+
+    <h5 class="mt-4">Расходы</h5>
+    <table class="expense-table table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Название</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for expense in expenses %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ expense.name }}</td>
+            <td>{{ expense.price }}</td>
+            <td>{{ expense.date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Расходов не было.</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>Итого расходов:</strong> {{ total_expenses }} руб.</p>
+    <p><strong>Самый большой расход:</strong> {{ max_expense }} руб.</p>
+    <p><strong>Средний расход:</strong> {{ avg_expense }} руб.</p>
+
+    <h5 class="mt-4">Доходы</h5>
+    <table class="expense-table table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">№</th>
+            <th scope="col">Название</th>
+            <th scope="col">Сумма</th>
+            <th scope="col">Дата</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for income in income %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ income.name }}</td>
+            <td>{{ income.price }}</td>
+            <td>{{ income.date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">Доходов не было.</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <p><strong>Итого дохода:</strong> {{ total_income }} руб.</p>
+    <p><strong>Самый большой доход:</strong> {{ max_income }} руб.</p>
+    <p><strong>Средний доход:</strong> {{ avg_income }} руб.</p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+.montserrat {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.semibold {
+    font-weight: 600; /* Полужирный шрифт */
+}
+
+.bold {
+    font-weight: 700; /* Жирный шрифт */
+}
