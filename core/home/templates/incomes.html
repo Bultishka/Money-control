@@ -54,14 +54,14 @@
             color: #856404;
         }
     </style>
-    <title>Траты</title>
+    <title>Доходы</title>
 </head>
 <body>
 <nav class="navbar custom-navbar navbar-dark py-3">
     <div class="container-fluid">
         <a class="nav-link px-4 py-2" href="{% url 'savings_list' %}">Сбережения</a>
-        <a class="nav-link active px-4 py-2" href="{% url 'expenses_list' %}">Траты</a>
-        <a class="nav-link px-4 py-2" href="{% url 'incomes_list' %}">Доходы</a>
+        <a class="nav-link px-4 py-2" href="{% url 'expenses_list' %}">Траты</a>
+        <a class="nav-link active px-4 py-2" href="{% url 'incomes_list' %}">Доходы</a>
         <a class="nav-link px-4 py-2" href="{% url 'plans' %}">Планы</a>
         <a class="nav-link px-4 py-2" href="{% url 'analytics' %}">Анализ</a>
         <span class="nav-link font-weight-bold mx-auto text-center">Вы находитесь в: {{ table }}</span>
@@ -70,7 +70,6 @@
         </button>
     </div>
 </nav>
-
 
 <div class="container mt-5">
     {% if messages %}
@@ -81,7 +80,9 @@
     </div>
     {% endif %}
     <div class="d-flex justify-content-between align-items-center mb-4">
-    <button class="btn btn-success btn-small montserrat" data-toggle="modal" data-target="#addTransactionModal">+ Добавить трату</button>
+        <button class="btn btn-success btn-small montserrat" data-toggle="modal" data-target="#addTransactionModal">+
+            Добавить доход
+        </button>
     </div>
 
     <table class="table mt-4 montserrat">
@@ -113,7 +114,8 @@
             {% endif %}
             <td>
                 <a href="{% url 'delete_transaction' transaction.id %}" class="btn btn-danger btn-sm m-2">Удалить</a>
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editTransactionModal{{ transaction.id }}">
+                <button class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#editTransactionModal{{ transaction.id }}">
                     Обновить
                 </button>
             </td>
@@ -123,13 +125,14 @@
     </table>
 
     <!-- Модальное окно для добавления транзакции -->
-    <div class="modal fade" id="addTransactionModal" tabindex="-1" aria-labelledby="addTransactionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addTransactionModal" tabindex="-1" aria-labelledby="addTransactionModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="{% url 'add_transaction' 'Expense' %}">
+                <form method="post" action="{% url 'add_transaction' 'Income' %}">
                     {% csrf_token %}
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addTransactionModalLabel">Добавить трату</h5>
+                        <h5 class="modal-title" id="addTransactionModalLabel">Добавить доход</h5>
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть"></button>
                     </div>
                     <div class="modal-body">
@@ -167,7 +170,7 @@
                         <!-- Чекбокс для "Использовать в аналитике?" -->
                         <div class="mb-3">
                             <label for="analytics" class="form-label">Использовать в аналитике?</label>
-                            <input type="checkbox" id="analytics" name="analytics" value="1" >
+                            <input type="checkbox" id="analytics" name="analytics" value="1">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -181,41 +184,50 @@
 
     <!-- Модальное окно для редактирования транзакции -->
     {% for transaction in transactions %}
-    <div class="modal fade" id="editTransactionModal{{ transaction.id }}" tabindex="-1" aria-labelledby="editTransactionModalLabel{{ transaction.id }}" aria-hidden="true">
+    <div class="modal fade" id="editTransactionModal{{ transaction.id }}" tabindex="-1"
+         aria-labelledby="editTransactionModalLabel{{ transaction.id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form method="post" action="{% url 'edit_transaction' transaction.id %}">
                     {% csrf_token %}
                     <div class="modal-header">
-                        <h5 class="modal-title" id="editTransactionModalLabel{{ transaction.id }}">Редактировать трату</h5>
+                        <h5 class="modal-title" id="editTransactionModalLabel{{ transaction.id }}">Редактировать
+                            доход</h5>
                         <button type="button" class="btn-close" data-dismiss="modal" aria-label="Закрыть"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="expenseName{{ transaction.id }}" class="form-label">Название</label>
-                            <input type="text" class="form-control" id="expenseName{{ transaction.id }}" name="name" value="{{ transaction.name }}" required>
+                            <input type="text" class="form-control" id="expenseName{{ transaction.id }}" name="name"
+                                   value="{{ transaction.name }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="expenseType{{ transaction.id }}" class="form-label">Тип</label>
                             <select class="form-select" id="expenseType{{ transaction.id }}" name="type" required>
                                 {% for plan in plans %}
-                                <option value="{{ plan.name }}" {% if plan.name == transaction.type %}selected{% endif %}>{{ plan.name }}</option>
+                                <option value="{{ plan.name }}" {% if plan.name == transaction.type %}selected
+                                        {% endif %}>{{ plan.name }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div class="mb-3">
                             <label for="expensePrice{{ transaction.id }}" class="form-label">Сумма</label>
-                            <input type="number" class="form-control" id="expensePrice{{ transaction.id }}" name="price" value="{{ transaction.price|dynamic_float }}" step="0.0001" required>
+                            <input type="number" class="form-control" id="expensePrice{{ transaction.id }}" name="price"
+                                   value="{{ transaction.price|dynamic_float }}" step="0.0001" required>
                         </div>
                         <div class="mb-3">
                             <label for="expenseDate{{ transaction.id }}" class="form-label">Дата</label>
-                            <input type="date" class="form-control" id="expenseDate{{ transaction.id }}" name="date" value="{{ transaction.date|date:'Y-m-d' }}" required>
+                            <input type="date" class="form-control" id="expenseDate{{ transaction.id }}" name="date"
+                                   value="{{ transaction.date|date:'Y-m-d' }}" required>
                         </div>
                         <div class="mb-3">
                             <label for="expenseSaving{{ transaction.id }}" class="form-label">Сбережение</label>
                             <select class="form-select" id="expenseSaving{{ transaction.id }}" name="saving" required>
                                 {% for saving in savings %}
-                                <option value="{{ saving.name }}" {% if saving.name == transaction.saving %}selected{% endif %}>{{ saving.name }}</option>
+                                <option value="{{ saving.name }}" {% if saving.name == transaction.saving %}selected
+                                        {% endif %}>{{ saving.name }}
+                                </option>
                                 {% endfor %}
                             </select>
                         </div>

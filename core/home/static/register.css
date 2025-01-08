@@ -1,4 +1,4 @@
-body {
+body { /* Фон, градиентная анимация, расположение элементов */
     font-family: 'Montserrat', sans-serif;
     background: linear-gradient(135deg, #28a745, #34d0d0);
     background-size: 400% 400%;
@@ -10,7 +10,7 @@ body {
     font-display: swap;
 }
 
-@keyframes waveAnimation {
+@keyframes waveAnimation { /* Параметры анимации */
     0% {
         background-position: 0% 50%;
     }
@@ -22,12 +22,13 @@ body {
     }
 }
 
-.container {
+.container { /* Внешний вид формы */
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Параметры поля для ввода с паролем (вид, скрывающий глаз) */
 .password-container {
     position: relative;
 }
@@ -53,11 +54,13 @@ body {
     color: #007bff;
 }
 
+/* Внешний вид поля ввода */
 .form-control {
     background-color: #f1f8e9;
     border-radius: 0.5rem;
 }
 
+/* Поведение кнопок */
 .btn-success {
     background-color: #28a745;
     border: none;
