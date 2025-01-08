@@ -5,6 +5,7 @@ from home import views
 urlpatterns = [
     #вход, выход, регистрация, администрирование
     path('', views.login_page, name='login'),
+    path('login', views.login_page, name='login'),
     path('logout/', views.custom_logout, name="logout"),
     path('register/', views.register_page, name='register'),
     path('admin/', admin.site.urls),

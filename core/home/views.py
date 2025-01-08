@@ -185,7 +185,7 @@ def add_plan(request):
             messages.error(request, "План с таким названием уже существует.")
             return redirect('plans')
 
-        Plans.objects.create(user=request.user, table=table, type=plan_type, name=name, expected_sum=expected_sum, reality_sum=0, analytics=analytics)
+        Plans.objects.create(user=request.user, table=table, type=plan_type, name=name, expected_sum=expected_sum, analytics=analytics)
         messages.success(request, "План добавлен успешно!")
         return redirect('plans')
 
@@ -483,14 +483,14 @@ def register_page(request):
             user_obj.set_password(password)
             user_obj.save()
             messages.success(request, "Аккаунт создан")
-            return redirect('/login')
+            return redirect('login')
         except Exception as e:
             messages.error(request, "Что-то пошло не так")
             return redirect('/register')
     return render(request, "register.html")
 
 
-#выход из аккаунта
+#выход
 def custom_logout(request):
     logout(request)
     return redirect('login')
